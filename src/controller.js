@@ -6,7 +6,7 @@ function getPlaces() {
   const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=90+Corona+St,+Denver,+CO&key=${API_KEY}`
   request(address_urlL, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      res.send(body);
+      res.send  (body);
     }
   })
 }

@@ -8,9 +8,14 @@ export default class Main extends Component {
   constructor() {
     super()
     this.state = {
-      lat = '',
-      long = '',
+      lat: '',
+      long: '',
+      barArray: []
     }
+  }
+
+  showBars() {
+    fetch()
   }
 
   render() {
