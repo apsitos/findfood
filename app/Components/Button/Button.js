@@ -1,5 +1,5 @@
 import React from 'react';
-require('./button-style.scss');
+// require('./button-style.scss');
 
 const Button = (props) => {
   return (
