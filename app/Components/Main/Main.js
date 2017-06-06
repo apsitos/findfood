@@ -15,7 +15,13 @@ export default class Main extends Component {
   }
 
   showBars() {
-    fetch()
+    fetch(`/api/places?`)
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      console.log(data);
+    })
   }
 
   render() {
@@ -23,7 +29,7 @@ export default class Main extends Component {
       <div>
         <Header />
         <Landing />
-        <Button id='search-btn' handleClick={() => this.showBars()} name='Find Food!'/>
+        <Button id='search-btn' handleClick={this.showBars.bind(this)} name='Find Food!'/>
         <Location />
       </div>
     )
