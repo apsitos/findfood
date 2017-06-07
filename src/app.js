@@ -32,7 +32,7 @@ app.use(express.static('build'))
 
 app.get('/', function (req, res) { res.sendFile(path.join(__dirname, '/../build/index.html')) });
 
-function getPlaces(req, res, next) {
+function getCoords(req, res) {
   const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=90+Corona+St,+Denver,+CO&key=${API_KEY}`
   let lat
   let long
@@ -59,18 +59,18 @@ function getPlaces(req, res, lat, long) {
   request(BASE_URL, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.send(body)
->>>>>>> Stashed changes
     }
   })
-  .then((response) => { response.sendFile(path.join(__dirname, '/../build/index.html')) })
+  // .then((response) => { response.sendFile(path.join(__dirname, '/../build/index.html')) })
 }
 
 // fetch(address_url)
 // .then((response) => console.log(response.body))
 // .then((response) => { response.json() })
 // .then((response) => { response.sendFile(path.join(__dirname, '/../build/index.html')) })
-app.get('/api/places?', (request, reponse) => {
-  getPlaces()
+
+app.get('/api/places?', (req, res) => {
+  getCoords(req, res)
 })
 
 // app.use('/api', router);
