@@ -32,21 +32,41 @@ app.use(express.static('build'))
 
 app.get('/', function (req, res) { res.sendFile(path.join(__dirname, '/../build/index.html')) });
 
-function getPlaces(req, res) {
+function getCoords(req, res) {
   const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=90+Corona+St,+Denver,+CO&key=${API_KEY}`
+  let coords
+  let lat
+  let long
+
   request(address_url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       geoLoc = JSON.parse(response.body)
-      geoLoc.results.map((results) => { console.log(results.geometry.location) })
+      geoLoc.results.map((results) => {
+        lat = results.geometry.location.lat
+        long = results.geometry.location.lng
+        return lat, long
+      })
       // res.send(response.body)
+    }
+    console.log(lat, long);
+  })
+  getPlaces(req, res, lat, long)
+}
+
+function getPlaces(req, res, lat, long) {
+  lat = lat || 39.7257155
+  long = long || -104.9713034
+  const BASE_URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=1600&keyword=restaurant&pagetoken&key=${API_KEY}`
+
+  request(BASE_URL, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.send(body)
     }
   })
 }
 
 app.get('/api/places?', (req, res) => {
-  let lat
-  let long
-  getPlaces(req, res)
+  getCoords(req, res)
 })
 
 app.listen(port);
