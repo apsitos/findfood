@@ -61,18 +61,13 @@ function getPlaces(req, res, lat, long) {
       res.send(body)
     }
   })
-  // .then((response) => { response.sendFile(path.join(__dirname, '/../build/index.html')) })
 }
-
-// fetch(address_url)
-// .then((response) => console.log(response.body))
-// .then((response) => { response.json() })
-// .then((response) => { response.sendFile(path.join(__dirname, '/../build/index.html')) })
 
 app.get('/api/places?', (req, res) => {
   getCoords(req, res)
 })
 
+//Earlier code: not sure if the app.get below needs to be used
 // app.use('/api', router);
 // app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, '/../build/index.html')) });
 

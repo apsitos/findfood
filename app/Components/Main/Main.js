@@ -20,7 +20,10 @@ export default class Main extends Component {
       return response.json()
     })
     .then((data) => {
-      console.log(data);
+      this.setState({ barArray: data.results });
+    })
+    .catch((error) => {
+      console.log('getBars: nope', error)
     })
   }
 
@@ -30,7 +33,7 @@ export default class Main extends Component {
         <Header />
         <Landing />
         <Button id='search-btn' handleClick={this.showBars.bind(this)} name='Find Food!'/>
-        <Location />
+        <Location bars={this.state.barArray} />
       </div>
     )
   }
