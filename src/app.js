@@ -32,27 +32,22 @@ app.use(express.static('build'))
 
 app.get('/', function (req, res) { res.sendFile(path.join(__dirname, '/../build/index.html')) });
 
-function getPlaces(req, res, next) {
+function getPlaces(req, res) {
   const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=90+Corona+St,+Denver,+CO&key=${API_KEY}`
   request(address_url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(response.body);
-      // response.send(response.body)
+      geoLoc = JSON.parse(response.body)
+      geoLoc.results.map((results) => { console.log(results.geometry.location) })
+      // res.send(response.body)
     }
   })
-  .then((response) => { response.sendFile(path.join(__dirname, '/../build/index.html')) })
 }
 
-// fetch(address_url)
-// .then((response) => console.log(response.body))
-// .then((response) => { response.json() })
-// .then((response) => { response.sendFile(path.join(__dirname, '/../build/index.html')) })
-app.get('/api/places?', (request, reponse) => {
-  getPlaces()
+app.get('/api/places?', (req, res) => {
+  let lat
+  let long
+  getPlaces(req, res)
 })
-
-// app.use('/api', router);
-// app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, '/../build/index.html')) });
 
 app.listen(port);
 
