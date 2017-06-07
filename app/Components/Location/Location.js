@@ -18,7 +18,7 @@ export default class Location extends React.Component {
   render() {
     return(
       <div>
-        <p>Location here</p>
+        {this.oneBar()}
       </div>
     )
   }
