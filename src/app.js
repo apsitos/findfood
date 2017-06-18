@@ -64,6 +64,9 @@ function getPlaces(req, res, lat, long) {
 }
 
 app.get('/api/places?', (req, res) => {
+  console.log(req.query);
+  let { address } =  req.query
+  console.log(address);
   getCoords(req, res)
 })
 
