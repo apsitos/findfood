@@ -17,20 +17,18 @@ export default class Main extends Component {
   }
 
   saveAddress(e) {
-    this.setState({ address: e.target.value})
+    this.setState({ address: e.target.value })
   }
 
   getAddress() {
-    let streetAddress = this.state.address
-    this.setState({ formatted: streetAddress.split(' ').join('+') })
+    let streetAddress = this.state.address.split(' ').join('+')
+    this.setState({ formatted: streetAddress })
+    console.log(this.state.address, this.state.formatted, streetAddress);
+    this.showBars()
   }
 
   showBars() {
-    this.getAddress()
-    fetch(`/api/places?`, {
-      method: 'GET',
-      body: this.state.formatted
-    })
+    fetch(`/api/places?address=${this.state.formatted}`)
     .then((response) => {
       return response.json()
     })
@@ -56,7 +54,7 @@ export default class Main extends Component {
                 onChange={(e) => this.saveAddress(e)}
           />
         </div>
-        <Button id='search-btn' handleClick={this.showBars.bind(this)} name='Find Food!'/>
+        <Button id='search-btn' handleClick={this.getAddress.bind(this)} name='Find Food!'/>
         <Location bars={this.state.barArray} />
       </div>
     )
