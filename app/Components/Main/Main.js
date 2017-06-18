@@ -9,6 +9,7 @@ export default class Main extends Component {
     super()
     this.state = {
       address: '',
+      formatted: '',
       barArray: []
     }
     // this.showBars.bind(this)
@@ -20,17 +21,16 @@ export default class Main extends Component {
   }
 
   getAddress() {
-    // let splitAddress = this.state.address.split(',')
     let streetAddress = this.state.address
-    debugger
-    for(let i = 0; i < streetAddress.length; i++) {
-      streetAddress.replace(/\s/, '+')
-    }
-    console.log(streetAddress);
+    this.setState({ formatted: streetAddress.split(' ').join('+') })
   }
 
   showBars() {
-    fetch(`/api/places?`)
+    this.getAddress()
+    fetch(`/api/places?`, {
+      method: 'GET',
+      body: this.state.formatted
+    })
     .then((response) => {
       return response.json()
     })
@@ -56,7 +56,7 @@ export default class Main extends Component {
                 onChange={(e) => this.saveAddress(e)}
           />
         </div>
-        <Button id='search-btn' handleClick={this.getAddress.bind(this)} name='Find Food!'/>
+        <Button id='search-btn' handleClick={this.showBars.bind(this)} name='Find Food!'/>
         <Location bars={this.state.barArray} />
       </div>
     )
