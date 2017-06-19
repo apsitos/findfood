@@ -22,9 +22,8 @@ export default class Main extends Component {
 
   getAddress() {
     let streetAddress = this.state.address.split(' ').join('+')
-    this.setState({ formatted: streetAddress })
+    this.setState({ formatted: streetAddress }, () => this.showBars())
     console.log(this.state.address, this.state.formatted, streetAddress);
-    this.showBars()
   }
 
   showBars() {
