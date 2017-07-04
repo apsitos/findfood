@@ -7,7 +7,6 @@ const app = express();
 const request = require('request');
 const config = require('../config.env');
 const API_KEY = (config.API_KEY);
-// const router = require('./router');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,7 +33,6 @@ app.get('/', function (req, res) { res.sendFile(path.join(__dirname, '/../build/
 
 function getCoords(req, res, address) {
   let streetAddress = address.split(' ').join('+')
-  console.log(streetAddress);
   const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=${streetAddress}&key=${API_KEY}`
   let lat
   let long
@@ -53,7 +51,6 @@ function getCoords(req, res, address) {
 }
 
 function getPlaces(req, res, lat, long) {
-  console.log('3', lat, long);
   lat = lat || 39.7257155
   long = long || -104.9713034
   const BASE_URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=1600&keyword=happyhour&pagetoken&key=${API_KEY}`
@@ -69,10 +66,6 @@ app.get('/api/places?', (req, res) => {
   let { address } =  req.query
   getCoords(req, res, address)
 })
-
-//Earlier code: not sure if the app.get below needs to be used
-// app.use('/api', router);
-// app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, '/../build/index.html')) });
 
 app.listen(port);
 
