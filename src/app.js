@@ -48,12 +48,12 @@ function getCoords(req, res, address) {
         return lat, long
       })
     }
-    console.log(lat, long);
+    getPlaces(req, res, lat, long)
   })
-  getPlaces(req, res, lat, long)
 }
 
 function getPlaces(req, res, lat, long) {
+  console.log('3', lat, long);
   lat = lat || 39.7257155
   long = long || -104.9713034
   const BASE_URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=1600&keyword=happyhour&pagetoken&key=${API_KEY}`
