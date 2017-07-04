@@ -12,22 +12,14 @@ export default class Main extends Component {
       formatted: '',
       barArray: []
     }
-    // this.showBars.bind(this)
-    // this.getAddress.bind(this)
   }
 
   saveAddress(e) {
     this.setState({ address: e.target.value })
   }
 
-  getAddress() {
-    let streetAddress = this.state.address.split(' ').join('+')
-    this.setState({ formatted: streetAddress }, () => this.showBars())
-    console.log(this.state.address, this.state.formatted, streetAddress);
-  }
-
   showBars() {
-    fetch(`/api/places?address=${this.state.formatted}`)
+    fetch(`/api/places?address=${this.state.address}`)
     .then((response) => {
       return response.json()
     })
@@ -46,14 +38,17 @@ export default class Main extends Component {
         <Header />
         <Landing />
         <div className='address'>
+          <section className='instructions'>Address must be entered as
+            <p>123 Yellow Brick Rd, Emerald City, OZ 26470</p>
+          </section>
           <input type='text'
                 name='address'
                 value={this.state.address}
-                placeholder='ex. 123 Main St, Anywhere, MO'
+                placeholder='ex. 123 Main St, Anywhere, MO 23505'
                 onChange={(e) => this.saveAddress(e)}
           />
         </div>
-        <Button id='search-btn' handleClick={this.getAddress.bind(this)} name='Find Food!'/>
+        <Button id='search-btn' handleClick={this.showBars.bind(this)} name='Find Food!'/>
         <Location bars={this.state.barArray} />
       </div>
     )
