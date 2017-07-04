@@ -32,7 +32,9 @@ app.use(express.static('build'))
 
 app.get('/', function (req, res) { res.sendFile(path.join(__dirname, '/../build/index.html')) });
 
-function getCoords(req, res) {
+function getCoords(req, res, address) {
+  let streetAddress = address.split(' ').join('+')
+  console.log(streetAddress);
   const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=90+Corona+St,+Denver,+CO&key=${API_KEY}`
   let lat
   let long
@@ -64,10 +66,9 @@ function getPlaces(req, res, lat, long) {
 }
 
 app.get('/api/places?', (req, res) => {
-  console.log(req.query);
   let { address } =  req.query
   console.log(address);
-  getCoords(req, res)
+  getCoords(req, res, address)
 })
 
 //Earlier code: not sure if the app.get below needs to be used
