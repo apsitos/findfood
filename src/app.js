@@ -35,7 +35,7 @@ app.get('/', function (req, res) { res.sendFile(path.join(__dirname, '/../build/
 function getCoords(req, res, address) {
   let streetAddress = address.split(' ').join('+')
   console.log(streetAddress);
-  const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=90+Corona+St,+Denver,+CO&key=${API_KEY}`
+  const address_url = `https://maps.googleapis.com/maps/api/geocode/json?address=${streetAddress}&key=${API_KEY}`
   let lat
   let long
 
@@ -67,7 +67,6 @@ function getPlaces(req, res, lat, long) {
 
 app.get('/api/places?', (req, res) => {
   let { address } =  req.query
-  console.log(address);
   getCoords(req, res, address)
 })
 
